@@ -1,12 +1,18 @@
 import { FormEvent, useState } from "react";
 import "./Form.css";
+import Shoutout from "../models/Shoutout";
 
-const Form = () => {
+interface Props {
+  onAdd: (shoutout: Shoutout) => void;
+}
+
+const Form = ({ onAdd }: Props) => {
   const [to, setTo] = useState<string>("");
   const [from, setFrom] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    onAdd({ to, from, message });
   };
   return (
     <form className="Form" onSubmit={handleSubmit}>
@@ -32,7 +38,10 @@ const Form = () => {
         cols={30}
         rows={10}
         placeholder="Your Message Here!"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
       ></textarea>
+      <button>Add</button>
     </form>
   );
 };

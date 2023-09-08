@@ -4,13 +4,14 @@ import "./List.css";
 
 interface Props {
   shoutouts: Shoutout[];
+  onDelete: (id: string) => void;
 }
 
-const List = ({ shoutouts }: Props) => {
+const List = ({ shoutouts, onDelete }: Props) => {
   return (
     <ul className="List">
       {shoutouts.map((item) => (
-        <Card shoutout={item} />
+        <Card shoutout={item} onDelete={onDelete} />
       ))}
     </ul>
   );
