@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Shoutout from "../models/Shoutout";
 import "./Main.css";
 import {
@@ -12,9 +12,10 @@ import Form from "./Form";
 const Main = () => {
   const [shoutouts, setShoutouts] = useState<Shoutout[]>([]);
 
-  const loadShoutouts = async () => {
+  const loadShoutouts = useCallback(async () => {
     setShoutouts(await getShoutouts());
-  };
+  }, []);
+
   const onAdd = async (shoutout: Shoutout) => {
     await addShoutout(shoutout);
     loadShoutouts();
@@ -25,7 +26,7 @@ const Main = () => {
   };
   useEffect(() => {
     loadShoutouts();
-  }, []);
+  }, [loadShoutouts]);
   return (
     <div className="Main">
       <Form onAdd={onAdd} />
